@@ -244,7 +244,12 @@ class SolrService implements SingletonInterface
     protected function addItemUidToAdditionalWhereClause(Basic $basicInitializer)
     {
         $tableAlias = $basicInitializer->getTableAlias();
-        $additionalWhereClause = array($this->solrTs['additionalWhereClause'], "$tableAlias.uid=" . $this->itemUid);
+        /**
+         * array_filter() removes empty string-elements from array. That would be useful if additionalWhereClause is not
+         * set via TypoScript.
+         */
+        $additionalWhereClause = array_filter(array($this->solrTs['additionalWhereClause'],
+            "$tableAlias.uid=" . $this->itemUid));
         $this->solrTs['additionalWhereClause'] = implode(' AND ', $additionalWhereClause);
     }
 
