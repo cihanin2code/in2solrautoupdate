@@ -30,7 +30,7 @@ use TYPO3\CMS\Core\DataHandling\DataHandler;
 use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
 
 /**
- * Class DataHandlerHookProcessor
+ * Class DataOperationHookProcessor
  *
  * We're doing $GLOBALS['TSFE']->getPageRenderer()->setBackPath(''); because some of the solr-extension's functions
  * initializes TSFE. Therefore after execution of our Hook-Processor paths like 'typo3/typo3/.../FormEngine.js are
@@ -38,7 +38,7 @@ use TYPO3\CMS\Extbase\Reflection\ObjectAccess;
  *
  * @package in2solrautoupdate
  */
-class DataHandlerHookProcessor
+class DataOperationHookProcessor
 {
     const NOTARGET = 'notarget';
     # Only update the solr-Index-Queue-table "tx_solr_indexqueue_item"
