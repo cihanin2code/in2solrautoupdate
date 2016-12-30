@@ -1,7 +1,7 @@
 {
   "name": "in2code/in2solrautoupdate",
   "description": "Automatic monitoring and update of solr-index",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "license": "GPL-2.0+",
   "type": "typo3-cms-extension",
   "authors": [
