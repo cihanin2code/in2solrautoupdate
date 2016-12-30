@@ -1,0 +1,46 @@
+{
+  "name": "in2code/in2solrautoupdate",
+  "description": "Automatic monitoring and update of solr-index",
+  "version": "1.0.0",
+  "keywords": [
+    "solr",
+    "ext-solr",
+    "monitor",
+    "record",
+    "index",
+    "queue",
+    "auto",
+    "autoupdate"
+  ],
+  "authors": [
+    {
+      "name": "Cihan Yesilöz",
+      "email": "cihan@in2code.de"
+    }
+  ],
+  "type": "typo3-cms-extension",
+  "license": "GPL-2.0+",
+  "require": {
+    "php": ">=5.3",
+    "typo3/cms": ">=6.2.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "In2code\\In2solrautoupdate\\": "Classes/"
+    }
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "vendor-dir": ".Build/vendor",
+    "bin-dir": ".Build/bin"
+  },
+  "extra": {
+    "typo3/cms": {
+      "cms-package-dir": "{$vendor-dir}/typo3/cms",
+      "web-dir": ".Build/Web"
+    },
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  }
+}

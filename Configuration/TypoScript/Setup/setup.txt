@@ -1,0 +1,52 @@
+# The field-names here are the TCA-fieldnames and not the solr-fieldnames.
+#
+# Options for "targets"-configuration:
+#   q = Only update solr-index-Queue
+#   i = Update the solr-index-Queue and the solr-index
+module.tx_in2solrautoupdate.settings {
+    sys_file_metadata {
+        # The root-page-id for sys_file_metadata-records. If you don't specify this, in2solrautoupdate determines
+        # the root-page-id based on the record's pid.
+        rootPageId = 1
+
+        # The Typoscript-configuration-name
+        configurationName = filemetadata
+
+        # When we remove the file in Backend we also want it automatically to be removed from the solr-Queue and
+        # solr-index.
+        automaticDelete.target = i
+
+        # When we upload a new file in Backend we want it to be automatically added to the solr-Queue.
+        automaticAdd.target = q
+
+        # When we change any data of sys_file_metadata, the solr's RecordMonitor knows about it, but as we're editing
+        # sys_file_metadata inside the filelist-module and outside the page-tree, no valid rootpage-id is set for
+        # RecordMonitor to fetch solr-configuration. Therefore it doesn't apply our changes to the solr-Index-Queue.
+        # For this reason we're updating the "changed"-timestamp of the changed item in the solr-Index-Queue.
+        automaticUpdate.target = q
+
+        // We use this so that we don't have to remove the "." after doing array_keys(sys_file_metadata)
+        fieldsToCheck {
+            visible = 1
+            fe_groups = 1
+            tx_in2mediaonsteroids_fe_users = 1
+        }
+
+        # This means: "Please update the solr-Queue and solr-index in case the record in case the record is updated.
+        visible {
+            automaticUpdate.target = i
+        }
+        # This means: "Please update the solr-Queue and solr-index in case the fields 'fe_groups' or
+        # 'tx_in2mediaonsteroids_fe_users' is updated. We want to update in these 2 cases automatically
+        # because both of them are used for filtering our solr-result. So as soon as this data changes, we want to make
+        # sure, that the frontend-user doesn't see results he is not allowed for. Otherwise as long as the BE-user forgets
+        # or delays a manual reindexing the frontend-user would always see unauthorized content and each time he clicks it
+        # he would see a warning "unauthorized" and that would be irritating for the frontend-user.
+        fe_groups {
+            automaticUpdate.target = i
+        }
+        tx_in2mediaonsteroids_fe_users {
+            automaticUpdate.target = i
+        }
+    }
+}
