@@ -22,9 +22,14 @@ This could be the case when e.g.:
 	**solr-Queue** + **solr-Index**
 * If there is a "additionalWhereClause" or custom Initializer defined for the monitored type (table) --> It is used for updating the item.
 	
+### Installation
+* Please add the following TypoScript-configuration to your installation. This way in2solrautoupdate can access the solr-TypoScript-settings out of the TYPO3-backend:
+<pre>
+module.tx\_solr < plugin.tx\_solr
+</pre>
+	
 ### Custom Initializers
 * If you want to use your own custom-solr-Initializer you have to extend "**In2code\In2solrautoupdate\IndexQueue\Initializer\Basic**" and implement "function **getTableAlias()**" which returns the table-alias (e.g. sys\_file\_metadata or sfm ..). That's used by in2solrautoupdate for attaching the condition "**uid=$itemUid**" so that the Initializer doesn't update all available items, but only the one single item, which has been created/updated/deleted.
-
 
 ### TypoScript configuration
 
