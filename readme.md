@@ -37,6 +37,7 @@ This could be the case when e.g.:
 	* **rootPageId**:  
 		(Default = $record['pid'])  
 		The rootpage used for updating the solr-Queue + Index.
+		For records, which are in the pagetree and have a page-id assigned, you don't have to set this. This option is useful for records, which have no pid assigned like "sys\_file\_metadata".
 
 	* **configurationName**:  
 		TypoScript configuration-name.
