@@ -84,9 +84,10 @@ class DataOperationHookProcessor
      *
      * @return void
      */
-    protected function unsetBackPath() {
+    protected function unsetBackPath()
+    {
         $pageRenderer = !empty($GLOBALS['TSFE']) ? $GLOBALS['TSFE']->getPageRenderer() : null;
-        if(!empty($pageRenderer)) {
+        if (!empty($pageRenderer)) {
             $pageRenderer->setBackPath('');
         }
     }
@@ -108,15 +109,14 @@ class DataOperationHookProcessor
 
         try {
             $tsSettings = ArrayUtility::getValueByPath($tsSettings, "settings/$table");
-        }
-        catch(\Exception $e) {
+        } catch (\Exception $e) {
             $tsSettings = null;
         }
 
         if (empty($tsSettings)) {
             return false;
         }
-        
+
         $this->tsSettings = $tsSettings;
         $this->solrService = GeneralUtility::makeInstance('In2code\\In2solrautoupdate\\Service\\SolrService');
 
@@ -129,7 +129,8 @@ class DataOperationHookProcessor
      * @param string $table
      * @return bool
      */
-    protected function initAdd($table) {
+    protected function initAdd($table)
+    {
         return $this->init($table) && ((int)ObjectAccess::getPropertyPath($this->tsSettings, 'automaticAdd') == 1);
     }
 
@@ -187,6 +188,7 @@ class DataOperationHookProcessor
             ($this->targetOperation == self::TARGET_OPERATION_AUTO_ADD),
             ($this->target == self::TARGET_QUEUE_AND_INDEX));
         $this->unsetBackPath();
+
         return $result;
     }
 
@@ -196,10 +198,12 @@ class DataOperationHookProcessor
      * @param array $targetOptionTs
      * @return mixed
      */
-    protected function getTarget($targetOptionTs) {
+    protected function getTarget($targetOptionTs)
+    {
         $target = ObjectAccess::getPropertyPath($targetOptionTs, 'target');
         $availableTargets = array(self::TARGET_QUEUE, self::TARGET_QUEUE_AND_INDEX);
         $foundTargetIndex = array_search($target, $availableTargets);
+
         return ($foundTargetIndex !== false) ? $availableTargets[$foundTargetIndex] : null;
     }
 
@@ -221,19 +225,20 @@ class DataOperationHookProcessor
      * @param string $tcaFieldToCheck
      * @return array
      */
-    protected function getTargetOptions($targetOperationsToCheck, $tcaFieldToCheck = null) {
+    protected function getTargetOptions($targetOperationsToCheck, $tcaFieldToCheck = null)
+    {
         $targetOptions = array('target' => null, 'targetOperation' => null);
 
-        foreach($targetOperationsToCheck as $targetOperationToCheck) {
+        foreach ($targetOperationsToCheck as $targetOperationToCheck) {
             /**
              * Example:
              *  1) sys_file_metadata.automaticUpdate.target = q
              *  2) sys_file_metadata.fe_groups.automaticUpdate.target = i
              */
-            $targetOptionTsPath = (!empty($tcaFieldToCheck) ? "$tcaFieldToCheck." : '').$targetOperationToCheck;
+            $targetOptionTsPath = (!empty($tcaFieldToCheck) ? "$tcaFieldToCheck." : '') . $targetOperationToCheck;
             $targetOptionTs = ObjectAccess::getPropertyPath($this->tsSettings, $targetOptionTsPath);
 
-            if(!empty($targetOptionTs)) {
+            if (!empty($targetOptionTs)) {
                 $targetOptions['target'] = $this->getTarget($targetOptionTs);
                 $targetOptions['targetOperation'] = !empty($targetOptions['target']) ? $targetOperationToCheck : null;
                 $targetOptions['typoScript'] = !empty($targetOptions['target']) ? $targetOptionTs : null;
@@ -250,8 +255,9 @@ class DataOperationHookProcessor
      * @param array $targetOptions
      * @return void
      */
-    protected function setTargetOptions($targetOptions) {
-        if(!empty($targetOptions['target'])) {
+    protected function setTargetOptions($targetOptions)
+    {
+        if (!empty($targetOptions['target'])) {
             $this->target = $targetOptions['target'];
             $this->targetOperation = $targetOptions['targetOperation'];
         }
@@ -263,8 +269,10 @@ class DataOperationHookProcessor
      * @param string $tcaFieldName
      * @return array
      */
-    protected function getTargetOptionsForUpdatedField($tcaFieldName) {
+    protected function getTargetOptionsForUpdatedField($tcaFieldName)
+    {
         $targetOptionsToCheck = array(self::TARGET_OPERATION_AUTO_DELETE, self::TARGET_OPERATION_AUTO_UPDATE);
+
         return $this->getTargetOptions($targetOptionsToCheck, $tcaFieldName);
     }
 
@@ -277,7 +285,8 @@ class DataOperationHookProcessor
      * @param array $fieldArray
      * @return void
      */
-    protected function setTargetOptionsForUpdatedFields($fieldArray) {
+    protected function setTargetOptionsForUpdatedFields($fieldArray)
+    {
         $this->initUpdate();
         $updatedFields = $this->getUpdatedFields($fieldArray);
         $finalOpFound = false;
@@ -310,7 +319,8 @@ class DataOperationHookProcessor
      * @param array $targetOperationsToCheck
      * @return void
      */
-    protected function setTargetOptionsForRow($targetOperationsToCheck) {
+    protected function setTargetOptionsForRow($targetOperationsToCheck)
+    {
         $this->setTargetOptions($this->getTargetOptions($targetOperationsToCheck));
     }
 
@@ -319,7 +329,8 @@ class DataOperationHookProcessor
      *
      * @return void
      */
-    protected function setTargetOptionsForUpdatedRow() {
+    protected function setTargetOptionsForUpdatedRow()
+    {
         $this->setTargetOptionsForRow(array(self::TARGET_OPERATION_AUTO_UPDATE));
     }
 
@@ -329,14 +340,15 @@ class DataOperationHookProcessor
      * @param array $fieldArray
      * @return void
      */
-    protected function processUpdate($fieldArray) {
+    protected function processUpdate($fieldArray)
+    {
         $this->setTargetOptionsForUpdatedFields($fieldArray);
 
         /**
          * In case there is no specific TypoScript-definition for a field-update we check whether there is a
          * general TypoScript-definition for a table-update for the currently active table.
          */
-        if($this->target == self::NOTARGET) {
+        if ($this->target == self::NOTARGET) {
             $this->setTargetOptionsForUpdatedRow();
         }
     }
@@ -346,7 +358,8 @@ class DataOperationHookProcessor
      *
      * @return void
      */
-    protected function setTargetOptionsForNewRow() {
+    protected function setTargetOptionsForNewRow()
+    {
         $this->setTargetOptionsForRow(array(self::TARGET_OPERATION_AUTO_ADD));
     }
 
@@ -355,7 +368,8 @@ class DataOperationHookProcessor
      *
      * @return void
      */
-    protected function processNew() {
+    protected function processNew()
+    {
         $this->setTargetOptionsForNewRow();
     }
 
@@ -376,7 +390,7 @@ class DataOperationHookProcessor
             return false;
         }
 
-        switch($status) {
+        switch ($status) {
             case 'new':
                 $this->processNew();
                 break;
@@ -440,6 +454,7 @@ class DataOperationHookProcessor
     {
         $result = $this->solrService->deleteAllOccurencesOfItem($type, $itemUid);
         $this->unsetBackPath();
+
         return $result;
     }
 
@@ -456,9 +471,9 @@ class DataOperationHookProcessor
      */
     public function processCmdmap_postProcess($command, $table, $uid, $value = null, DataHandler $dataHandler = null)
     {
-        switch($command) {
+        switch ($command) {
             case 'delete':
-                if($this->initDelete($table)) {
+                if ($this->initDelete($table)) {
                     $this->deleteSolrIndex($table, $uid);
                 }
                 break;

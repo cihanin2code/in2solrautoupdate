@@ -8,7 +8,7 @@ defined('TYPO3_MODE') or die('Access denied.');
  * processCmdmap_postProcess()
  */
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processCmdmapClass'][] =
-    'EXT:in2solrautoupdate/Classes/HookProcessor/DataOperationHookProcessor.php:'.
+    'EXT:in2solrautoupdate/Classes/HookProcessor/DataOperationHookProcessor.php:' .
     'In2code\\In2solrautoupdate\\HookProcessor\\DataOperationHookProcessor';
 
 /**
@@ -18,7 +18,7 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['proc
  * processCmdmap_postProcess()
  */
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['in2solrautoupdate']['in2solrautoupdateProcessCmdmapClass'][] =
-    'EXT:in2solrautoupdate/Classes/HookProcessor/DataOperationHookProcessor.php:'.
+    'EXT:in2solrautoupdate/Classes/HookProcessor/DataOperationHookProcessor.php:' .
     'In2code\\In2solrautoupdate\\HookProcessor\\DataOperationHookProcessor';
 
 /*
@@ -27,7 +27,7 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['in2solrautoupdate']['in2solrautoupdat
  * processDatamap_postProcessFieldArray()
  */
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][] =
-    'EXT:in2solrautoupdate/Classes/HookProcessor/DataOperationHookProcessor.php:'.
+    'EXT:in2solrautoupdate/Classes/HookProcessor/DataOperationHookProcessor.php:' .
     'In2code\\In2solrautoupdate\\HookProcessor\\DataOperationHookProcessor';
 
 /**
@@ -37,6 +37,6 @@ $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['proc
  * processDatamap_postProcessFieldArray()
  */
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['in2solrautoupdate']['in2solrautoupdateProcessDatamapClass'][] =
-    'EXT:in2solrautoupdate/Classes/HookProcessor/DataOperationHookProcessor.php:'.
+    'EXT:in2solrautoupdate/Classes/HookProcessor/DataOperationHookProcessor.php:' .
     'In2code\\In2solrautoupdate\\HookProcessor\\DataOperationHookProcessor';
 

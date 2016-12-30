@@ -32,7 +32,8 @@ use In2code\In2solrautoupdate\IndexQueue\Initializer\Basic;
  *
  * @package In2code\In2solrautoupdate\IndexQueue\Initializer
  */
-class Record extends Basic  {
+class Record extends Basic
+{
     /**
      * Returns the table-alias-name for adding the WHERE-condition.
      *
