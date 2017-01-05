@@ -1,5 +1,5 @@
 <?php
-namespace ApacheSolrForTypo3\Solr\IndexQueue\Initializer;
+namespace In2code\In2solrautoupdate\IndexQueue\Initializer;
 
 /***************************************************************
  *  Copyright notice

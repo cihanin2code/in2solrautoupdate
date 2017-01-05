@@ -228,7 +228,7 @@ class SolrService implements SingletonInterface
             "index.queue.$configurationName.initialization");
 
         if (empty($initializerClass)) {
-            $initializerClass = 'ApacheSolrForTypo3\Solr\IndexQueue\Initializer\Record';
+            $initializerClass = 'In2code\In2solrautoupdate\IndexQueue\Initializer\Record';
         }
 
         return $initializerClass;
